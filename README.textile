@@ -21,24 +21,24 @@ The predecessor is the parent of it's heirs, and thereby implicitly gives it's h
 
 To mark a model as predecessor, simply use the @acts_as_predecessor@ class-method:
 
-```ruby
+<pre>
   class Post < ActiveRecord::Base
     acts_as_predecessor
   end
-```
+</pre>
 
 To mark a model as heir, simply use the @acts_as_heir_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
 
-```ruby
+<pre>
   class BlogPost < ActiveRecord::Base
     acts_as_heir_of :post
   end
-```
+</pre>
 
 This takes care of the model configuration. We however need to add two extra columns to the Posts table.
 We need a @heir_id@ column of type @integer@ and a @heir_type@ column of type @string@.
 
-```ruby
+<pre>
   class CreatePosts < ActiveRecord::Migration
     def self.up
       create_table :posts do |t|
@@ -65,7 +65,7 @@ We need a @heir_id@ column of type @integer@ and a @heir_type@ column of type @s
       drop_table :blog_posts
     end
   end
-```
+<end>
   
 When this is done and the database is migrated, we can begin using the models.
 
@@ -73,9 +73,9 @@ h2. Creating new instances
 
 Now we can simply call the following to create a new @BlogPost@
 
-```ruby
+<pre>
   blog_post = BlogPost.create(:title => "Wow", :body => "That's a nice blog post!")
-```
+</pre>
 
 Notice that the @title@ attribute belongs to the @Post@ model, and the @body@ attribute belongs to the @BlogPost@ model.
 
@@ -83,26 +83,26 @@ h2. Attributes
 
 We can directly access the @title@ attribute through @BlogPost@ and even change it's value
 
-```ruby
+<pre>
   blog_post.title # "Wow"
   blog_post.title = "Oh boy!"
   blog_post.save!
   blog_post.title # "Oh boy!"
-```
+</pre>
 
 We can also update attributes like normal through @update_attributes@
 
-```ruby
+<pre>
   blog_post.update_attributes(:title => "Hubba Hubba", :body => "Nice blog post!")
   blog_post.title # "Hubba Hubba"
   blog_post.body # "Nice blog post!"
-```
+</pre>
 
 h2. Methods
 
 If we want to expose some methods from our predecessor model to it's heirs, we can do so when calling the @acts_as_predecessor@ class-method
 
-```ruby
+<pre>
   class Post < ActiveRecord::Base
 
     acts_as_predecessor :exposes => :hello
@@ -112,18 +112,18 @@ If we want to expose some methods from our predecessor model to it's heirs, we c
     end
 
   end
-```
+</pre>
 
 Now all heirs of @Post@ will have a hello-method, which we can call directly on the heir-model:
 
-```ruby
+<pre>
   blog_post = BlogPost.create(:title => "I am full", :body => "of methods...")
   blog_post.hello # "Hi there!"
-```
+</pre>
 
 If you for some reason need to override the method in one of your heir-models, you can simply implement the method, and it will override the method from the predecessor.
 
-```ruby
+<pre>
   class BlogPost < ActiveRecord::Base
 
     acts_as_heir_of :post
@@ -133,18 +133,18 @@ If you for some reason need to override the method in one of your heir-models, y
     end
 
   end
-```
+</pre>
 
 Calling the @hello@ method on BlogPost will now yield another result:
 
-```ruby
+<pre>
   blog_post = BlogPost.create(:title => "I have", :body => "my own methods...")
   blog_post.hello # "Yo!"
-```
+</pre>
 
 If we need to combine the local method in the heir, with the method in the predecessor, we can do so through the @predecessor@ method of the heir model, kinda like you would use @super@.
 
-```ruby
+<pre>
   class BlogPost < ActiveRecord::Base
 
     acts_as_heir_of :post
@@ -154,14 +154,14 @@ If we need to combine the local method in the heir, with the method in the prede
     end
 
   end
-```
+</pre>
 
 The result would now be a combination of the local method in the heir, and the method in the predecessor:
 
-```ruby
+<pre>
   blog_post = BlogPost.create(:title => "I have", :body => "my own methods...")
   blog_post.hello # "Yo! Hi there!"
-```
+</pre>
 
 h2. Listing and filtering
 
@@ -169,31 +169,31 @@ To list all your wonderful heir models you do as you normally would in ActiveRec
 
 Normally you would call something like this, to show all @BlogPosts@
 
-```ruby
+<pre>
   @posts = BlogPost.all
-```
+</pre>
 
 This however will result in 1 + the number of returned records SQL calls, which is hardly good.
 Instead you need to tell ActiveRecord that it should include the predecessors of the heirs, like so:
 
-```ruby
+<pre>
   @posts = BlogPost.all(:include => :predecessor)
-```
+</pre>
 
 We now only call the database twice; Once for loading the heirs, and once for loading all referenced predecessors.
 
 Another gotcha is when you need to filter the heirs. You can't directly filter by attributes from the predecessor model.
 So in our example where we have the @title@ attribute in the @Post@ model, we can't do the following:
 
-```ruby
+<pre>
   @posts = BLogPost.where("title = 'test'")
-```
+</pre>
 
 Instead we need to reference predecessor attributes by the predecessors database-table, like so:
 
-```ruby
+<pre>
   @posts = BlogPost.where("posts.title = 'test'")
-```
+</pre>
 
 Behind the scenes, heritage works just like a simple ActiveRecord association, so it makes sense.
 
