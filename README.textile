@@ -21,11 +21,11 @@ The predecessor is the parent of it's heirs, and thereby implicitly gives it's h
 
 To mark a model as predecessor, simply use the @acts_as_predecessor@ class-method:
 
-<pre>
+```ruby
   class Post < ActiveRecord::Base
     acts_as_predecessor
   end
-</pre>
+```
 
 To mark a model as heir, simply use the @acts_as_heir_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
 
