@@ -1,0 +1,11 @@
+<h1>Image posts</h1>
+<p>
+  <%= link_to "Create new", new_image_post_path %>
+</p>
+<ul>
+  <% @image_posts.each do |image_post| %>
+    <li><%= link_to image_post.title, image_post_path(image_post) %>
+    (<%= link_to "E", edit_image_post_path(image_post) %>,
+    <%= link_to "D", image_post_path(image_post), :method => :delete %>)</li>
+  <% end %>
+</ul>

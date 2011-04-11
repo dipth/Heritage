@@ -1,0 +1,9 @@
+<h1>Posts</h1>
+<ul>
+  <% @posts.each do |post| %>
+    <li>
+      <strong><%= post.heir_type %></strong>
+      <%= link_to post.title, post_path(post) %>
+    </li>
+  <% end %>
+</ul>

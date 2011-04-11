@@ -1,0 +1,12 @@
+<h1>Blog post</h1>
+<p>
+  <%= link_to "List", blog_posts_path %>
+  <%= link_to "Edit", edit_blog_post_path(@blog_post) %>
+  <%= link_to "Delete", blog_post_path(@blog_post), :method => :delete %>
+</p>
+<ul>
+  <li><strong>Title:</strong> <%= @blog_post.title %></li>
+  <li><strong>Body:</strong> <%= @blog_post.body %></li>
+  <li><strong>Created at:</strong> <%= @blog_post.created_at %></li>
+  <li><strong>Updated at:</strong> <%= @blog_post.updated_at %></li>
+</ul>

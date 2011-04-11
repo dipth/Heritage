@@ -1,0 +1,13 @@
+<% form_for @image_post do |f| -%>
+  <p>
+    <%= f.label :title, "Title" %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :aspect, "Aspect" %>
+    <%= f.text_field :aspect %>
+  </p>
+  <p>
+    <%= f.submit "Save", :disable_with => 'Saving...' %>
+  </p>
+<% end -%>

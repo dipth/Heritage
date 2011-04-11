@@ -1,0 +1,12 @@
+<h1>Image post</h1>
+<p>
+  <%= link_to "List", image_posts_path %>
+  <%= link_to "Edit", edit_image_post_path(@image_post) %>
+  <%= link_to "Delete", image_post_path(@image_post), :method => :delete %>
+</p>
+<ul>
+  <li><strong>Title:</strong> <%= @image_post.title %></li>
+  <li><strong>Aspect:</strong> <%= @image_post.aspect %></li>
+  <li><strong>Created at:</strong> <%= @image_post.created_at %></li>
+  <li><strong>Updated at:</strong> <%= @image_post.updated_at %></li>
+</ul>

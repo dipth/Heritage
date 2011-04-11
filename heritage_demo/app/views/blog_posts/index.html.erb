@@ -1,0 +1,11 @@
+<h1>Blog posts</h1>
+<p>
+  <%= link_to "Create new", new_blog_post_path %>
+</p>
+<ul>
+  <% @blog_posts.each do |blog_post| %>
+    <li><%= link_to blog_post.title, blog_post_path(blog_post) %>
+    (<%= link_to "E", edit_blog_post_path(blog_post) %>,
+    <%= link_to "D", blog_post_path(blog_post), :method => :delete %>)</li>
+  <% end %>
+</ul>

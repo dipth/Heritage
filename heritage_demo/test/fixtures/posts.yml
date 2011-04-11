@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  heir_id: 1
+  heir_type: MyString
+  title: MyString
+
+two:
+  heir_id: 1
+  heir_type: MyString
+  title: MyString
