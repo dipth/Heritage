@@ -209,6 +209,10 @@ If you absolutely need to do a direct delete in the database, then you need to m
 
 For instance, if you manually delete a @BlogPost@ that is heir of @Post@, then you need to first find the right @Post@, then delete the heir and finally delete the predecessor.
 
+h2. Advanced usage
+
+It is always possible to traverse between a predecessor and it's associated heir, through the @predecessor@ method of an heir, and the @heir@ method of a predecessor.
+
 h2. Questions, Feedback
 
 Feel free to message me on Github (murui)
