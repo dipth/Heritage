@@ -65,7 +65,7 @@ We need a @heir_id@ column of type @integer@ and a @heir_type@ column of type @s
       drop_table :blog_posts
     end
   end
-<end>
+</pre>
   
 When this is done and the database is migrated, we can begin using the models.
 
