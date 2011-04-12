@@ -14,12 +14,23 @@ module Heritage
 
         alias_method_chain :predecessor, :build
         
-        self._predecessor_klass.content_columns.map(&:name).each do |att|
+        # Expose columns from the predecessor
+        self._predecessor_klass.columns.reject{|c| c.primary || c.name == Post.inheritance_column || c.name =~ /^heir_/}.map(&:name).each do |att|
           define_method(att) do
             predecessor.send(att)
           end
           define_method("#{att}=") do |val|
             predecessor.send("#{att}=",val)
+          end
+        end
+        
+        # Expose associations from the predecessor
+        self._predecessor_klass.reflect_on_all_associations.reject{|a| a.name == :heir}.each do |association|
+          define_method(association.name) do
+            predecessor.send(association.name)
+          end
+          define_method("#{association.name}=") do |val|
+            predecessor.send("#{association.name}=",val)
           end
         end
         

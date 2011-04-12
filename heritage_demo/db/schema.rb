@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411095655) do
+ActiveRecord::Schema.define(:version => 20110412094758) do
 
   create_table "_blog_posts_old_20110411", :force => true do |t|
     t.integer  "predecessor_id"
@@ -30,6 +30,12 @@ ActiveRecord::Schema.define(:version => 20110411095655) do
     t.text "body"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "image_posts", :force => true do |t|
     t.integer "aspect"
   end
@@ -40,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20110411095655) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
 end

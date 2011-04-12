@@ -3,3 +3,12 @@
 
 en:
   hello: "Hello world"
+  
+  activerecord:
+    attributes:
+      blog_post:
+        predecessor:
+          title: Gnap
+        body: Shazam
+        title: Yauza
+      

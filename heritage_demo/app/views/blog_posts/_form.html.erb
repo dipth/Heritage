@@ -1,10 +1,24 @@
+<% if @blog_post.errors.any? %>
+  <p>
+    <%#= @blog_post.errors.inspect %>
+  </p>
+<div id="errorExplanation">
+  <h2><%= pluralize(@blog_post.errors.count, "error") %> prohibited this record from being saved:</h2>
+  <ul>
+  <% @blog_post.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
+
 <% form_for @blog_post do |f| -%>
   <p>
-    <%= f.label :title, "Title" %>
+    <%= f.label :title %>
     <%= f.text_field :title %>
   </p>
   <p>
-    <%= f.label :body, "Body" %>
+    <%= f.label :body %>
     <%= f.text_field :body %>
   </p>
   <p>
