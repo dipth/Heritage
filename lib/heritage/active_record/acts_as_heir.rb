@@ -15,7 +15,7 @@ module Heritage
         alias_method_chain :predecessor, :build
         
         # Expose columns from the predecessor
-        self._predecessor_klass.columns.reject{|c| c.primary || c.name == Post.inheritance_column || c.name =~ /^heir_/}.map(&:name).each do |att|
+        self._predecessor_klass.columns.reject{|c| c.primary || c.name =~ /^heir_/}.map(&:name).each do |att|
           define_method(att) do
             predecessor.send(att)
           end
