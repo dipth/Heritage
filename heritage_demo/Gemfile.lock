@@ -1,7 +1,7 @@
 PATH
   remote: ~/Projects/benjamin/heritage
   specs:
-    heritage (0.1.0)
+    heritage (0.3.0)
 
 GEM
   remote: http://rubygems.org/
