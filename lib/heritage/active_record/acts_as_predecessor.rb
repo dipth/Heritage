@@ -9,8 +9,10 @@ module Heritage
         options[:exposes] ||= []
         class_attribute :_acts_as_predecessor_settings
         self._acts_as_predecessor_settings = options
-        
-        belongs_to :heir, :polymorphic => true, :touch => true
+
+        belongs_to :heir, :polymorphic => true
+
+        before_update :touch_heir, :unless => lambda { heir.changed? }
       end
 
       module ClassMethods
@@ -23,7 +25,11 @@ module Heritage
       end
 
       module InstanceMethods
-        
+        def touch_heir
+          if self.changed?
+            heir.touch
+          end
+        end
       end
 
     end

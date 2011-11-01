@@ -35,8 +35,8 @@ module Heritage
         end
 
         # We need to make sure that updated_at values in the predecessor table is updated when the heir is saved.
-        after_update :touch_predecessor
-        
+        before_update :touch_predecessor, :unless => lambda { predecessor.changed? }
+
         # Expose methods from predecessor
         self._predecessor_klass.get_heritage_exposed_methods.each do |method_symbol|
           define_method(method_symbol.to_s) do |*args|
@@ -59,7 +59,9 @@ module Heritage
         end
 
         def touch_predecessor
-          predecessor.touch
+          if self.changed?
+            predecessor.touch
+          end
         end
       end
 
