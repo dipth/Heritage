@@ -1,6 +1,10 @@
 module Heritage
   module ActiveRecord
     module ActsAsPredecessor
+      
+      def parent_model(options = {})
+        acts_as_predecessor(options)
+      end
 
       def acts_as_predecessor(options = {})
         extend ClassMethods
