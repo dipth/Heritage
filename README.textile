@@ -19,19 +19,19 @@ h2. Usage
 Heritage works by assigning one model as your @predecessor@, and one or more other models as it's @heir@.
 The predecessor is the parent of it's heirs, and thereby implicitly gives it's heirs access to it's columns, and optionally exposing methods to them.
 
-To mark a model as predecessor, simply use the @acts_as_predecessor@ class-method:
+To mark a model as predecessor, simply use the @parent_model@ class-method:
 
 <pre>
   class Post < ActiveRecord::Base
-    acts_as_predecessor
+    parent_model
   end
 </pre>
 
-To mark a model as heir, simply use the @acts_as_heir_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
+To mark a model as heir, simply use the @child_of_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
 
 <pre>
   class BlogPost < ActiveRecord::Base
-    acts_as_heir_of :post
+    child_of_of :post
   end
 </pre>
 
@@ -100,12 +100,12 @@ We can also update attributes like normal through @update_attributes@
 
 h2. Methods
 
-If we want to expose some methods from our predecessor model to it's heirs, we can do so when calling the @acts_as_predecessor@ class-method
+If we want to expose some methods from our predecessor model to it's heirs, we can do so when calling the @parent_model@ class-method
 
 <pre>
   class Post < ActiveRecord::Base
 
-    acts_as_predecessor :exposes => :hello
+    parent_model :exposes => :hello
 
     def hello
       "Hi there!"
@@ -126,7 +126,7 @@ If you for some reason need to override the method in one of your heir-models, y
 <pre>
   class BlogPost < ActiveRecord::Base
 
-    acts_as_heir_of :post
+    child_of_of :post
 
     def hello
       "Yo!"
@@ -147,7 +147,7 @@ If we need to combine the local method in the heir, with the method in the prede
 <pre>
   class BlogPost < ActiveRecord::Base
 
-    acts_as_heir_of :post
+    child_of_of :post
 
     def hello
       "Yo! #{predecessor.hello}"
