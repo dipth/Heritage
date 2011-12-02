@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  predecessor_id: 1
-  aspect: 1
-
-two:
-  predecessor_id: 1
-  aspect: 1
