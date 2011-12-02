@@ -2,7 +2,7 @@ module Heritage
   module ActiveRecord
     module ActsAsPredecessor
 
-      def acts_as_predecessor(options = {})
+      def parent_model(options = {})
         extend ClassMethods
         include InstanceMethods
 

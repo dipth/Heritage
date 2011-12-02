@@ -2,7 +2,7 @@ module Heritage
   module ActiveRecord
     module ActsAsHeir
 
-      def acts_as_heir_of(predecessor_symbol)
+      def child_of(predecessor_symbol)
         extend ClassMethods
         include InstanceMethods
 
