@@ -27,11 +27,11 @@ To mark a model as predecessor, simply use the @parent_model@ class-method:
   end
 </pre>
 
-To mark a model as heir, simply use the @child_of_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
+To mark a model as heir, simply use the @child_of@ class-method, passing a symbol to the model that is to be the heirs predecessor.
 
 <pre>
   class BlogPost < ActiveRecord::Base
-    child_of_of :post
+    child_of :post
   end
 </pre>
 
@@ -126,7 +126,7 @@ If you for some reason need to override the method in one of your heir-models, y
 <pre>
   class BlogPost < ActiveRecord::Base
 
-    child_of_of :post
+    child_of :post
 
     def hello
       "Yo!"
@@ -147,7 +147,7 @@ If we need to combine the local method in the heir, with the method in the prede
 <pre>
   class BlogPost < ActiveRecord::Base
 
-    child_of_of :post
+    child_of :post
 
     def hello
       "Yo! #{predecessor.hello}"
