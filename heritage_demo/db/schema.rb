@@ -12,20 +12,6 @@
 
 ActiveRecord::Schema.define(:version => 20110412094758) do
 
-  create_table "_blog_posts_old_20110411", :force => true do |t|
-    t.integer  "predecessor_id"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "_image_posts_old_20110411", :force => true do |t|
-    t.integer  "predecessor_id"
-    t.integer  "aspect"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "blog_posts", :force => true do |t|
     t.text "body"
   end
