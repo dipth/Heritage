@@ -2,29 +2,43 @@ module Heritage
   module ActiveRecord
     module ActsAsHeir
       
-      def child_of(parent_symbol)
-        acts_as_heir_of(parent_symbol)
+      def child_of(parent_symbol, params)
+        acts_as_heir_of(parent_symbol, params)
       end
 
-      def acts_as_heir_of(predecessor_symbol)
+      def acts_as_heir_of(predecessor_symbol, params)
         extend ClassMethods
         include InstanceMethods
 
         class_attribute :_predecessor_klass, :_predecessor_symbol
         self._predecessor_symbol = predecessor_symbol
-        self._predecessor_klass = Object.const_get(predecessor_symbol.to_s.capitalize)
+        if defined? params and not params.nil? and defined? params[:class] and not params[:class].nil? then
+          self._predecessor_klass = params[:class].constantize
+        else
+          self._predecessor_klass = predecessor_symbol.constantize
+        end
 
-        has_one :predecessor, :as => :heir, :class_name => predecessor_symbol.to_s.capitalize, :autosave => true, :dependent => :destroy
+        has_one :predecessor, :as => :heir, :class_name => self._predecessor_klass.to_s, :autosave => true, :dependent => :destroy
 
         alias_method_chain :predecessor, :build
 
         # Expose columns from the predecessor
-        self._predecessor_klass.columns.reject{|c| c.primary || c.name =~ /^heir_/}.map(&:name).each do |att|
-          define_method(att) do
-            predecessor.send(att)
+        self._predecessor_klass.columns.reject{|c| (c.primary and not c.name.eql?("id")) or c.name =~ /^heir_/}.each do |att|
+          if att.primary then
+            if ( not defined? params[:include_predecessor_id] or params[:include_predecessor_id].nil? or params[:include_predecessor_id] == false) then
+              next
+            else
+              define_method(predecessor_symbol.to_s.underscore + "_id") do
+                predecessor.send(att.name)
+              end
+            end
           end
-          define_method("#{att}=") do |val|
-            predecessor.send("#{att}=",val)
+
+          define_method(att.name) do
+            predecessor.send(att.name)
+          end
+          define_method("#{att.name}=") do |val|
+            predecessor.send("#{att.name}=",val)
           end
         end
 
