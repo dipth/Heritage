@@ -6,15 +6,24 @@ module Heritage
         acts_as_heir_of(parent_symbol)
       end
 
-      def acts_as_heir_of(predecessor_symbol)
+      def acts_as_heir_of(predecessor_name)
         extend ClassMethods
         include InstanceMethods
 
         class_attribute :_predecessor_klass, :_predecessor_symbol
-        self._predecessor_symbol = predecessor_symbol
-        self._predecessor_klass = Object.const_get(predecessor_symbol.to_s.capitalize)
+        self._predecessor_symbol = predecessor_name.to_sym
 
-        has_one :predecessor, :as => :heir, :class_name => predecessor_symbol.to_s.capitalize, :autosave => true, :dependent => :destroy
+        if predecessor_name.kind_of?(String) && (name_parts= predecessor_name.split('::')).any?
+                self._predecessor_klass= Object
+                name_parts.each do |part|
+                        self._predecessor_klass = self._predecessor_klass.const_get(part)
+                end
+        else
+                self._predecessor_klass = Object.const_get(predecessor_name.to_s.capitalize)
+                predecessor_name= predecessor_name.to_s.capitalize
+        end
+
+        has_one :predecessor, :as => :heir, :class_name => predecessor_name, :autosave => true, :dependent => :destroy
 
         alias_method_chain :predecessor, :build
 
