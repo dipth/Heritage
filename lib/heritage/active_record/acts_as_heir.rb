@@ -2,11 +2,11 @@ module Heritage
   module ActiveRecord
     module ActsAsHeir
       
-      def child_of(parent_symbol, params)
+      def child_of(parent_symbol, params = nil)
         acts_as_heir_of(parent_symbol, params)
       end
 
-      def acts_as_heir_of(predecessor_symbol, params)
+      def acts_as_heir_of(predecessor_symbol, params = nil)
         extend ClassMethods
         include InstanceMethods
 
@@ -15,7 +15,7 @@ module Heritage
         if defined? params and not params.nil? and defined? params[:class] and not params[:class].nil? then
           self._predecessor_klass = params[:class].constantize
         else
-          self._predecessor_klass = predecessor_symbol.constantize
+          self._predecessor_klass = predecessor_symbol.to_s.camelcase.constantize
         end
 
         has_one :predecessor, :as => :heir, :class_name => self._predecessor_klass.to_s, :autosave => true, :dependent => :destroy
