@@ -12,6 +12,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'autotest'
-	gem 'autotest-fsevent'
-	gem 'autotest-growl'
+# MacOSX only
+#	gem 'autotest-fsevent'
+#	gem 'autotest-growl'
 end

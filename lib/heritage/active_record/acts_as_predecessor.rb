@@ -16,7 +16,7 @@ module Heritage
 
         belongs_to :heir, :polymorphic => true
 
-        before_update :touch_heir, :unless => lambda { heir.changed? }
+        before_update :touch_heir, :unless => lambda { heir && heir.changed? }
       end
 
       module ClassMethods
@@ -30,7 +30,7 @@ module Heritage
 
       module InstanceMethods
         def touch_heir
-          if self.changed?
+          if self.changed? && heir
             heir.touch
           end
         end
