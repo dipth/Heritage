@@ -23,7 +23,7 @@ module Heritage
         alias_method_chain :predecessor, :build
 
         # Expose columns from the predecessor
-        self._predecessor_klass.columns.reject{|c| c.primary and not c.name.eql?("id") }.each do |att|
+        self._predecessor_klass.columns.reject{|c| c.primary and not ["id", "created_at", "updated_at"].include?(c.name) }.each do |att|
           if att.primary then
             if ( defined? params[:include_predecessor_id] and not params[:include_predecessor_id].nil? and params[:include_predecessor_id] == true) then
               define_method(predecessor_symbol.to_s.underscore + "_id") do
