@@ -12,9 +12,9 @@ module Heritage
 
         class_attribute :_predecessor_klass, :_predecessor_symbol
         self._predecessor_symbol = predecessor_symbol
-        self._predecessor_klass = Object.const_get(predecessor_symbol.to_s.capitalize)
+        self._predecessor_klass = Object.const_get(predecessor_symbol.to_s.camelize)
 
-        has_one :predecessor, :as => :heir, :class_name => predecessor_symbol.to_s.capitalize, :autosave => true, :dependent => :destroy
+        has_one :predecessor, :as => :heir, :class_name => predecessor_symbol.to_s.camelize, :autosave => true, :dependent => :destroy
 
         alias_method_chain :predecessor, :build
 
