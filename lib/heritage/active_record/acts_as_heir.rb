@@ -65,7 +65,7 @@ module Heritage
         self._predecessor_klass.get_heritage_exposed_methods.each do |method_symbol|
           define_method(method_symbol.to_s) do |*args|
             if args.length > 0
-              predecessor.send(method_symbol.to_s, args)
+              predecessor.send(method_symbol.to_s, args.flatten)
             else
               predecessor.send(method_symbol.to_s)
             end
