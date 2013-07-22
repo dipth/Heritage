@@ -189,10 +189,10 @@ So in our example where we have the @title@ attribute in the @Post@ model, we ca
   @posts = BLogPost.where("title = 'test'")
 </pre>
 
-Instead we need to reference predecessor attributes by the predecessors database-table, like so:
+Instead we need to join the predecessor attributes by its association, like so:
 
 <pre>
-  @posts = BlogPost.where("posts.title = 'test'")
+  @posts = BlogPost.joins(:predecessor).where("posts.title = 'test'")
 </pre>
 
 Behind the scenes, heritage works just like a simple ActiveRecord association, so it makes sense.
