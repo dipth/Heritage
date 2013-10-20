@@ -44,11 +44,7 @@ module Heritage
         # Expose methods from predecessor
         self._predecessor_klass.get_heritage_exposed_methods.each do |method_symbol|
           define_method(method_symbol.to_s) do |*args|
-            if args.length > 0
-              predecessor.send(method_symbol.to_s, args)
-            else
-              predecessor.send(method_symbol.to_s)
-            end
+            predecessor.send(method_symbol.to_s, *args)
           end
         end
       end
