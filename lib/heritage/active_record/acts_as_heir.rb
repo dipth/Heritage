@@ -38,6 +38,11 @@ module Heritage
           end
         end
 
+        # Include validations from the predecessor
+        self._predecessor_klass.validators.each do |validator|
+          self.validates_with(validator.class, :attributes => validator.attributes, :options => validator.options)
+        end
+
         # We need to make sure that updated_at values in the predecessor table is updated when the heir is saved.
         before_update :touch_predecessor, :unless => lambda { predecessor.changed? }
 
