@@ -29,6 +29,10 @@ module Heritage
       end
 
       module InstanceMethods
+        def heritage
+          self
+        end
+
         def touch_heir
           if self.changed?
             heir.touch

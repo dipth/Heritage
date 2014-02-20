@@ -54,6 +54,10 @@ module Heritage
       end
 
       module InstanceMethods
+        def heritage
+          predecessor
+        end
+
         def predecessor_with_build(attributes = {})
           predecessor_without_build || build_predecessor(attributes)
         end
