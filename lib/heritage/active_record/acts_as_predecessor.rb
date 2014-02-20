@@ -33,6 +33,10 @@ module Heritage
           self
         end
 
+        def lineage
+          heir
+        end
+
         def touch_heir
           if self.changed?
             heir.touch

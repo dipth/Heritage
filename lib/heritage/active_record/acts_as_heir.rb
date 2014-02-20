@@ -58,6 +58,10 @@ module Heritage
           predecessor
         end
 
+        def lineage
+          self
+        end
+
         def predecessor_with_build(attributes = {})
           predecessor_without_build || build_predecessor(attributes)
         end
